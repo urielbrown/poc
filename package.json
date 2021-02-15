@@ -6,14 +6,19 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
+    "cross-env": "^7.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0"
   },
-  "scripts": {
+  "scripts": { 
     "start": "react-scripts start",
+    "start:production": "cross-env REACT_APP_ENV=production react-scripts start",
+    "start:staging": "cross-env REACT_APP_ENV=staging react-scripts start",
     "build": "react-scripts build",
+    "build:production": "cross-env REACT_APP_ENV=production npm run build",
+    "build:staging": "cross-env REACT_APP_ENV=staging npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
