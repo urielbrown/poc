@@ -22,8 +22,7 @@ steps:
 - script: npm run build:staging  
   displayName: 'poc staging build'
 - task: ArchiveFiles@2
-  inputs:  
-    rootFolderOrFile: '$(Build.BinariesDirectory)/build' 
+  inputs:     
     includeRootFolder: false
     archiveType: zip
     archiveFile: '$(Build.ArtifactStagingDirectory)/poc-staging/build.zip'
