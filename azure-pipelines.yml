@@ -1,0 +1,73 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-default
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    workingDirectory: frontend
+    displayName: 'frontend install dependencies'
+
+- script: npm run build:staging
+  workingDirectory: frontend
+  displayName: 'frontend staging build'
+- task: ArchiveFiles@2
+  inputs:  
+    rootFolderOrFile: 'frontend/build' 
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: '$(Build.ArtifactStagingDirectory)/frontend-staging/build.zip'
+    replaceExistingArchive: true 
+  displayName: 'frontend staging zip files'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend-staging'
+    ArtifactName: 'frontend-staging'
+  displayName: 'frontend staging publish to pipeline'
+
+- script: npm run build:production
+  workingDirectory: frontend
+  displayName: 'frontend production build'
+- task: ArchiveFiles@2
+  inputs:  
+    rootFolderOrFile: 'frontend/build' 
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: '$(Build.ArtifactStagingDirectory)/frontend-production/build.zip'
+    replaceExistingArchive: true 
+  displayName: 'frontend production zip files'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend-production'
+    ArtifactName: 'frontend-production'
+  displayName: 'frontend production publish to pipeline'
+
+- script: npm run build
+  workingDirectory: frontend
+  displayName: 'frontend dev build'
+- task: ArchiveFiles@2
+  inputs:  
+    rootFolderOrFile: 'frontend/build' 
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: '$(Build.ArtifactStagingDirectory)/frontend-dev/build.zip'
+    replaceExistingArchive: true 
+  displayName: 'frontend dev zip files'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend-dev'
+    ArtifactName: 'frontend-dev'
+  displayName: 'frontend dev publish to pipeline'
+
