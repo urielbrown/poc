@@ -16,16 +16,14 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
-    workingDirectory: poc
+    npm install    
     displayName: 'poc install dependencies'
 
-- script: npm run build:staging
-  workingDirectory: poc
+- script: npm run build:staging  
   displayName: 'poc staging build'
 - task: ArchiveFiles@2
   inputs:  
-    rootFolderOrFile: 'poc/build' 
+    rootFolderOrFile: '$(Build.BinariesDirectory)/build' 
     includeRootFolder: false
     archiveType: zip
     archiveFile: '$(Build.ArtifactStagingDirectory)/poc-staging/build.zip'
@@ -36,38 +34,4 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/poc-staging'
     ArtifactName: 'poc-staging'
   displayName: 'poc staging publish to pipeline'
-
-- script: npm run build:production
-  workingDirectory: frontend
-  displayName: 'frontend production build'
-- task: ArchiveFiles@2
-  inputs:  
-    rootFolderOrFile: 'frontend/build' 
-    includeRootFolder: false
-    archiveType: zip
-    archiveFile: '$(Build.ArtifactStagingDirectory)/frontend-production/build.zip'
-    replaceExistingArchive: true 
-  displayName: 'frontend production zip files'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend-production'
-    ArtifactName: 'frontend-production'
-  displayName: 'frontend production publish to pipeline'
-
-- script: npm run build
-  workingDirectory: frontend
-  displayName: 'frontend dev build'
-- task: ArchiveFiles@2
-  inputs:  
-    rootFolderOrFile: 'frontend/build' 
-    includeRootFolder: false
-    archiveType: zip
-    archiveFile: '$(Build.ArtifactStagingDirectory)/frontend-dev/build.zip'
-    replaceExistingArchive: true 
-  displayName: 'frontend dev zip files'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend-dev'
-    ArtifactName: 'frontend-dev'
-  displayName: 'frontend dev publish to pipeline'
 
