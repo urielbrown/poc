@@ -17,25 +17,25 @@ steps:
 
 - script: |
     npm install
-    workingDirectory: frontend
-    displayName: 'frontend install dependencies'
+    workingDirectory: poc
+    displayName: 'poc install dependencies'
 
 - script: npm run build:staging
-  workingDirectory: frontend
-  displayName: 'frontend staging build'
+  workingDirectory: poc
+  displayName: 'poc staging build'
 - task: ArchiveFiles@2
   inputs:  
-    rootFolderOrFile: 'frontend/build' 
+    rootFolderOrFile: 'poc/build' 
     includeRootFolder: false
     archiveType: zip
-    archiveFile: '$(Build.ArtifactStagingDirectory)/frontend-staging/build.zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/poc-staging/build.zip'
     replaceExistingArchive: true 
-  displayName: 'frontend staging zip files'
+  displayName: 'poc staging zip files'
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend-staging'
-    ArtifactName: 'frontend-staging'
-  displayName: 'frontend staging publish to pipeline'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/poc-staging'
+    ArtifactName: 'poc-staging'
+  displayName: 'poc staging publish to pipeline'
 
 - script: npm run build:production
   workingDirectory: frontend
