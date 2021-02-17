@@ -29,3 +29,9 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/poc-staging/build.zip'
     replaceExistingArchive: true 
   displayName: 'poc staging zip files'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/poc-staging'
+    ArtifactName: 'poc-staging'
+  displayName: 'poc staging publish to pipeline'
