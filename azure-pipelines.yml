@@ -19,7 +19,7 @@ steps:
     npm install
     displayName: 'poc install dependencies'
 
-- script: npm run build:staging  
+- script: npm run build:production  
   displayName: 'poc staging build'
 
 - task: ArchiveFiles@2
