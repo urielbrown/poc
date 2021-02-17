@@ -19,12 +19,13 @@ steps:
     npm install
     displayName: 'poc install dependencies'
 
-- script: npm run build:staging  
+- script: npm run build:staging
+  workingDirectory: urielbrown.poc
   displayName: 'poc staging build'
 
 - task: ArchiveFiles@2
   inputs: 
-    rootFolderOrFile: 'build'
+    rootFolderOrFile: 'urielbrown.poc/build'
     includeRootFolder: false
     archiveType: zip
     archiveFile: '$(Build.ArtifactStagingDirectory)/poc-staging/build.zip'
