@@ -16,21 +16,8 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install    
+    npm install
     displayName: 'poc install dependencies'
 
-- script: npm run build:staging  
+- script: npm run build:staging
   displayName: 'poc staging build'
-- task: ArchiveFiles@2
-  inputs:     
-    includeRootFolder: false
-    archiveType: zip
-    archiveFile: '$(Build.ArtifactStagingDirectory)/poc-staging/build.zip'
-    replaceExistingArchive: true 
-  displayName: 'poc staging zip files'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/poc-staging'
-    ArtifactName: 'poc-staging'
-  displayName: 'poc staging publish to pipeline'
-
